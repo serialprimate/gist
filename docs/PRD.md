@@ -1,7 +1,7 @@
 # PRD: gist (Polyglot Semantic Code Search)
 
 **Project Status:** Weekend Sprint (PoC)
-**Primary Stack:** Python 3.11+, `tree-sitter-languages`, `sentence-transformers`, `chromadb`, `click`
+**Primary Stack:** Python 3.12+, `tree-sitter-languages`, `sentence-transformers`, `chromadb`, `click`
 
 ---
 
