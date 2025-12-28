@@ -1,0 +1,61 @@
+{
+    "autopep8.args": [
+        "--max-line-length",
+        "119",
+        "--aggressive",
+        "--aggressive"
+    ],
+    "autopep8.importStrategy": "fromEnvironment",
+    "isort.args": [
+        "--only-sections",
+        "--line-length",
+        "119",
+        "--skip",
+        ".venv",
+        "--skip",
+        "build",
+        "--skip",
+        "dist",
+        "--verbose",
+        "--force-adds",
+        "--force-alphabetical-sort-within-sections",
+        "--virtual-env",
+        ".venv"
+    ],
+    "isort.check": true,
+    "isort.importStrategy": "fromEnvironment",
+    "mypy-type-checker.args": [
+        "--show-column-numbers",
+        "--strict",
+        "--local-partial-types",
+        "--exclude",
+        "/(dist|build)/$"
+    ],
+    "mypy-type-checker.importStrategy": "fromEnvironment",
+    "pylint.args": [
+        "--enable-all-extensions",
+        "--check-protected-access-in-special-methods",
+        "True",
+        "--allow-global-unused-variables",
+        "False",
+        "--check-quote-consistency",
+        "True",
+        "--disable=design,missing-docstring,consider-ternary-expression,too-many-instance-attributes,too-many-public-methods,too-many-arguments,too-many-locals,too-many-branches,consider-using-assignment-expr",
+        "--max-line-length=119",
+        "--jobs=1"
+    ],
+    "pylint.ignorePatterns": [
+        "**/site-packages/**/*.py",
+        ".*/**/*.py",
+        "dist/**/*.py",
+        "build/**/*.py"
+    ],
+    "pylint.importStrategy": "fromEnvironment",
+    "python.analysis.autoSearchPaths": false,
+    "python.analysis.completeFunctionParens": true,
+    "python.analysis.indexing": true,
+    "python.analysis.inlayHints.functionReturnTypes": true,
+    "python.analysis.inlayHints.variableTypes": true,
+    "python.analysis.typeCheckingMode": "off",
+    "python.terminal.activateEnvInCurrentTerminal": true
+}

@@ -1,0 +1,45 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+{
+	"name": "${localWorkspaceFolderBasename}-dev",
+
+	"build": {
+		"dockerfile": "Dockerfile",
+		"context": "."
+	},
+
+	"runArgs": [
+		"--tmpfs",
+		"/tmp"
+	],
+
+	"mounts": [
+		// Mount the local timezone to the container to ensure correct time settings.
+		"source=/etc/timezone,target=/etc/timezone,readonly,type=bind",
+		"source=/etc/localtime,target=/etc/localtime,readonly,type=bind",
+		// Mount the local Docker socket for Docker-outside-of-Docker (DoD) scenarios.
+		"source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+	],
+
+	"remoteUser": "dev",
+
+	"workspaceMount": "source=${localWorkspaceFolder},target=/code/${localWorkspaceFolderBasename},type=bind",
+
+	"workspaceFolder": "/code/${localWorkspaceFolderBasename}",
+
+	// Configure tool-specific properties.
+	"customizations": {
+
+		// Configure properties specific to VS Code.
+		"vscode": {
+
+			// Add the IDs of extensions you want installed when the container is created.
+			"extensions": [
+				"ms-python.python",
+				"ms-python.pylint",
+				"ms-python.isort",
+				"ms-python.mypy-type-checker",
+				"ms-python.autopep8"
+			]
+		}
+	}
+}

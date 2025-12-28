@@ -1,0 +1,5 @@
+-c requirements.txt
+pylint
+mypy
+autopep8
+isort
