@@ -15,9 +15,7 @@
 	"mounts": [
 		// Mount the local timezone to the container to ensure correct time settings.
 		"source=/etc/timezone,target=/etc/timezone,readonly,type=bind",
-		"source=/etc/localtime,target=/etc/localtime,readonly,type=bind",
-		// Mount the local Docker socket for Docker-outside-of-Docker (DoD) scenarios.
-		"source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+		"source=/etc/localtime,target=/etc/localtime,readonly,type=bind"
 	],
 
 	"remoteUser": "dev",
