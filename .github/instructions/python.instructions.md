@@ -31,9 +31,8 @@ applyTo: "**/*.py"
 ## Code Style & Formatting
 - Follow **PEP 8** style guide strictly
 - Use automated formatters:
-  - `black` for code formatting (line length: 88 or 100)
-  - `isort` for import sorting (use `--profile black` for compatibility)
-  - `ruff` as an all-in-one linter and formatter
+  - `autopep8` for code formatting
+  - `isort` for import sorting
 - Naming conventions:
   - `snake_case` for functions, variables, and modules
   - `PascalCase` for classes
@@ -81,7 +80,7 @@ applyTo: "**/*.py"
 - Write tests using `pytest` (preferred) or `unittest`
 - Use fixtures for test setup and teardown
 - Use `pytest-cov` for coverage reports
-- Run linters: `ruff`, `pylint`, or `flake8`
+- Run linters: `pylint`
 - Use `mypy` for static type checking
 - Consider property-based testing with `hypothesis`
 
