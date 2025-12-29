@@ -1,7 +1,7 @@
 """CLI entrypoint for gist.
 
-Phase 2 implements:
-- `gist index`: build a persistent vector index under `.gist/`.
+Commands:
+- `gist index`: (re)build a persistent vector index under `.gist/`.
 - `gist search`: semantic search over indexed code blocks.
 """
 
@@ -35,7 +35,7 @@ def index(root: Path) -> None:  # pylint: disable=unused-variable
 
     root = root.resolve()
 
-    # Phase 2 (PoC) behaviour: always wipe and rebuild.
+    # PoC behaviour: always wipe and rebuild.
     chroma_dir = root / ".gist" / "chroma"
     if chroma_dir.exists():
         shutil.rmtree(chroma_dir)

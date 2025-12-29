@@ -1,7 +1,7 @@
 """Directory walking and exclusion logic.
 
-Phase 1 goal: iterate supported source files under a root directory while
-respecting hard-coded excludes and .gitignore patterns.
+Iterates supported source files under a root directory while respecting
+hard-coded excludes and `.gitignore` patterns.
 """
 
 from __future__ import annotations
@@ -72,7 +72,7 @@ def iter_supported_files(  # pylint: disable=unused-variable
         return gitignore.match_file(rel_str)
 
     for current_dir, dirnames, filenames in root.walk():
-        # Prune directories in-place so os.walk won't traverse them.
+        # Prune directories in-place so as not to traverse them.
         kept: list[str] = []
         for dirname in dirnames:
             if dirname in excluded_dir_names:

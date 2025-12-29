@@ -1,7 +1,7 @@
-"""Vector store persistence for gist (Phase 2).
+"""Vector store persistence for gist.
 
-Encapsulates ChromaDB persistence under `.gist/chroma/` and provides minimal
-operations needed by the CLI.
+Encapsulates ChromaDB persistence under `.gist/chroma/` and provides the
+minimal operations needed by the CLI.
 """
 
 from __future__ import annotations

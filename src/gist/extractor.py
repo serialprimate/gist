@@ -1,7 +1,7 @@
 """Code extraction using Tree-sitter.
 
-Phase 1 goal: given a source file, extract function/class blocks and return
-structured metadata for printing/validation.
+Given a supported source file, extract non-overlapping function/class blocks
+with enough metadata for indexing and display.
 """
 
 from __future__ import annotations

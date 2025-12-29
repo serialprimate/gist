@@ -1,4 +1,4 @@
-"""Indexing pipeline for gist (Phase 2).
+"""Indexing pipeline for gist.
 
 Pure-ish logic: walk -> extract -> hash/id -> embed -> store.
 """
@@ -100,7 +100,7 @@ def index_root(  # pylint: disable=unused-variable
     for file_path in iter_supported_files(root, gitignore=gitignore):
         try:
             file_stats = _index_file(root=root, file_path=file_path, store=store, embedder=embedder)
-        except Exception as exc:  # noqa: BLE001 - Phase 2: best-effort indexing  # pylint: disable=broad-exception-caught
+        except Exception as exc:  # noqa: BLE001 - best-effort indexing  # pylint: disable=broad-exception-caught
             if on_file_error is not None:
                 on_file_error(file_path, exc)
             continue
