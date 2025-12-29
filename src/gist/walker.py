@@ -13,7 +13,6 @@ import pathspec
 
 from gist.extractor import detect_language
 
-
 _DEFAULT_EXCLUDED_DIR_NAMES: frozenset[str] = frozenset(
     {
         ".git",

@@ -90,7 +90,10 @@ def extract_code_blocks(path: Path) -> list[ExtractedCodeBlock]:  # pylint: disa
                 language=language,
                 class_node_types=class_node_types,
             )
-            code = source_bytes[node.start_byte : node.end_byte].decode("utf-8", errors="replace")
+            code = source_bytes[node.start_byte: node.end_byte].decode(
+                "utf-8",
+                errors="replace",
+            )
             blocks.append(
                 ExtractedCodeBlock(
                     filename=str(path),
@@ -126,14 +129,20 @@ def _resolve_parent_class_name(
         if current.type in class_node_types:
             name_node = current.child_by_field_name("name")
             if name_node is not None:
-                return source_bytes[name_node.start_byte : name_node.end_byte].decode("utf-8", errors="replace")
+                return source_bytes[name_node.start_byte: name_node.end_byte].decode(
+                    "utf-8",
+                    errors="replace",
+                )
 
             # Best-effort fallback for grammars that don't expose a "name" field.
             # Keep this conservative: return None if we can't confidently derive it.
             if language in {"cpp"}:
                 for child in current.children:
                     if child.type in {"type_identifier", "identifier"}:
-                        return source_bytes[child.start_byte : child.end_byte].decode("utf-8", errors="replace")
+                        return source_bytes[child.start_byte: child.end_byte].decode(
+                            "utf-8",
+                            errors="replace",
+                        )
 
             return None
         return find_parent_class(current.parent)
