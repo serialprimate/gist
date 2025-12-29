@@ -20,6 +20,7 @@ Before drafting, you must build a mental model of the existing codebase.
    contracts.
 3. Start with broad directory listings and high-level architecture files
    before drilling down into specific implementation logic.
+4. Assess which features or components will be impacted by the new requirements.
 
 ### Phase 2: Draft a Detailed Plan
 Generate a markdown document named `implementation_plan.md`. It must include:
