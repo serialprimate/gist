@@ -142,6 +142,6 @@ See "Language Support Details" above
 Edit `_DEFAULT_EXCLUDED_DIR_NAMES` in `walker.py` (frozenset for immutability)
 
 ## References
-- [PRD](docs/PRD.md) - Vision, phases, future extensions
-- [Phase 1 Plan](docs/implementation_plan_phase_1.md) - Implementation details
-- [Python Instructions](.github/instructions/python.instructions.md) - Code style guide
+- [PRD](../docs/PRD.md) - Vision, phases, future extensions
+- [Phase 1 Plan](../docs/implementation_plan_phase_1.md) - Implementation details
+- [Python Instructions](instructions/python.instructions.md) - Code style guide
