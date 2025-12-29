@@ -2,6 +2,17 @@
 name = "gist"
 version = "0.1.0"
 description = "Polyglot semantic code search using Tree-sitter and vector embeddings"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { file = "LICENSE" }
+dependencies = [
+  "click",
+  "pathspec",
+  "tree-sitter==0.20.4",
+  "tree-sitter-languages",
+  "sentence-transformers",
+  "chromadb",
+]
 classifiers = [
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
@@ -9,7 +20,8 @@ classifiers = [
 
 [project.urls]
 Homepage = "https://github.com/serialprimate/gist"
-Documentation = "https://gist.readthedocs.io/"
+Repository = "https://github.com/serialprimate/gist"
+Issues = "https://github.com/serialprimate/gist/issues"
 
 [project.scripts]
 gist = "gist.main:main"
