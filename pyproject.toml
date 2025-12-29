@@ -1,7 +1,7 @@
 [project]
 name = "gist"
 version = "0.1.0"
-description = "A short description of the Python package"
+description = "Polyglot semantic code search using Tree-sitter and vector embeddings"
 classifiers = [
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",

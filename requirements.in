@@ -1,0 +1,4 @@
+click
+pathspec
+tree-sitter==0.20.4
+tree-sitter-languages

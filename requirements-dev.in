@@ -3,3 +3,5 @@ pylint
 mypy
 autopep8
 isort
+pytest
+build

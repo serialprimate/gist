@@ -4,3 +4,16 @@
 #
 #    pip-compile --strip-extras requirements.in
 #
+click==8.3.1
+    # via -r requirements.in
+pathspec==0.12.1
+    # via -r requirements.in
+tree-sitter==0.20.4
+    # via
+    #   -r requirements.in
+    #   tree-sitter-languages
+tree-sitter-languages==1.10.2
+    # via -r requirements.in
+
+# The following packages are considered to be unsafe in a requirements file:
+# setuptools
