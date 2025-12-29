@@ -7,7 +7,7 @@ from click.testing import CliRunner
 from gist.main import cli
 
 
-def test_cli_index_outputs_blocks(tmp_path: Path) -> None:
+def test_cli_index_outputs_blocks(tmp_path: Path) -> None:  # pylint: disable=unused-variable
     sample = tmp_path / "a.py"
     sample.write_text("def f():\n    return 1\n", encoding="utf-8")
 

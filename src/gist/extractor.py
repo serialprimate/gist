@@ -10,7 +10,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from tree_sitter import Node
-from tree_sitter_languages import get_parser
+from tree_sitter_languages import get_parser  # type: ignore
 
 
 @dataclass(frozen=True, slots=True)
@@ -54,7 +54,7 @@ def detect_language(path: Path) -> str | None:
     return _SUPPORTED_SUFFIX_TO_LANGUAGE.get(path.suffix.lower())
 
 
-def extract_code_blocks(path: Path) -> list[ExtractedCodeBlock]:
+def extract_code_blocks(path: Path) -> list[ExtractedCodeBlock]:  # pylint: disable=unused-variable
     """Extract function/class code blocks from a supported source file.
 
     Args:
@@ -120,8 +120,9 @@ def _resolve_parent_class_name(
     language: str,
     class_node_types: set[str],
 ) -> str | None:
-    current = node.parent
-    while current is not None:
+    def find_parent_class(current: Node | None) -> str | None:
+        if current is None:
+            return None
         if current.type in class_node_types:
             name_node = current.child_by_field_name("name")
             if name_node is not None:
@@ -135,7 +136,6 @@ def _resolve_parent_class_name(
                         return source_bytes[child.start_byte : child.end_byte].decode("utf-8", errors="replace")
 
             return None
+        return find_parent_class(current.parent)
 
-        current = current.parent
-
-    return None
+    return find_parent_class(node.parent)

@@ -44,7 +44,7 @@ def load_gitignore_spec(root: Path) -> pathspec.PathSpec:
     return pathspec.PathSpec.from_lines("gitwildmatch", lines)
 
 
-def iter_supported_files(
+def iter_supported_files(  # pylint: disable=unused-variable
     root: Path,
     *,
     gitignore: pathspec.PathSpec | None = None,

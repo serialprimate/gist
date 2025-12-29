@@ -7,7 +7,7 @@ import pytest
 from gist.extractor import detect_language, extract_code_blocks
 
 
-def test_detect_language() -> None:
+def test_detect_language() -> None:  # pylint: disable=unused-variable
     assert detect_language(Path("x.py")) == "python"
     assert detect_language(Path("x.ts")) == "typescript"
     assert detect_language(Path("x.js")) == "javascript"
@@ -15,7 +15,7 @@ def test_detect_language() -> None:
     assert detect_language(Path("x.txt")) is None
 
 
-def test_extract_python_blocks(tmp_path: Path) -> None:
+def test_extract_python_blocks(tmp_path: Path) -> None:  # pylint: disable=unused-variable
     path = tmp_path / "sample.py"
     path.write_text(
         """
@@ -63,7 +63,7 @@ int f(int x) { return x + 1; }
         ),
     ],
 )
-def test_extract_other_languages_smoke(tmp_path: Path, filename: str, source: str) -> None:
+def test_extract_other_languages_smoke(tmp_path: Path, filename: str, source: str) -> None:  # pylint: disable=unused-variable
     path = tmp_path / filename
     path.write_text(source, encoding="utf-8")
 

@@ -26,7 +26,7 @@ def cli() -> None:
     required=False,
     default=Path("."),
 )
-def index(root: Path) -> None:
+def index(root: Path) -> None:  # pylint: disable=unused-variable
     """Walk ROOT and print extracted code blocks."""
 
     root = root.resolve()
@@ -35,7 +35,7 @@ def index(root: Path) -> None:
     for file_path in iter_supported_files(root, gitignore=gitignore):
         try:
             blocks = extract_code_blocks(file_path)
-        except Exception as exc:  # noqa: BLE001 - phase 1: report and continue
+        except Exception as exc:  # pylint: disable=broad-except
             click.echo(f"[error] {file_path}: {exc}", err=True)
             continue
 
