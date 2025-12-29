@@ -83,7 +83,7 @@ def _index_file(
     return _FileIndexStats(blocks_extracted=len(blocks), blocks_indexed=len(stored_blocks))
 
 
-def index_root(
+def index_root(  # pylint: disable=unused-variable
     root: Path,
     *,
     store: VectorStore,

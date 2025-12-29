@@ -21,7 +21,7 @@ class _StubEmbedder:
         return [0.0 if "needle" in query else 10.0]
 
 
-def test_cli_index_outputs_summary(
+def test_cli_index_outputs_summary(  # pylint: disable=unused-variable
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:  # pylint: disable=unused-variable
@@ -47,7 +47,7 @@ def test_cli_search_errors_without_index(tmp_path: Path) -> None:  # pylint: dis
     assert "No index found" in result.output
 
 
-def test_cli_index_then_search_with_stub_embedder(
+def test_cli_index_then_search_with_stub_embedder(  # pylint: disable=unused-variable
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:  # pylint: disable=unused-variable

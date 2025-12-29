@@ -58,7 +58,7 @@ def _load_sentence_transformer(model_name: str) -> Any:
     return SentenceTransformer(model_name)
 
 
-def get_default_embedder() -> Embedder:
+def get_default_embedder() -> Embedder:  # pylint: disable=unused-variable
     """Return the default embedder used by the CLI."""
 
     return SentenceTransformerEmbedder()

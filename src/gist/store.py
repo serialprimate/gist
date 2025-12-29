@@ -146,7 +146,7 @@ class VectorStore:
         return hits
 
 
-def open_store(root: Path) -> VectorStore:
+def open_store(root: Path) -> VectorStore:  # pylint: disable=unused-variable
     """Open (or create) a persistent ChromaDB store under ROOT."""
 
     root = root.resolve()
