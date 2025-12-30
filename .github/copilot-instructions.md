@@ -72,7 +72,7 @@ source .venv/bin/activate
 pip install -e .           # Editable install for development
 ```
 
-**Critical:** `pythonsetup.sh` uses `pip-compile` (from pip-tools) to pin dependencies. The workflow is:
+**Critical:** `pythonsetup.sh` creates a `.venv` and uses `pip-compile` (from pip-tools) to pin dependencies. The workflow is:
 1. Edit `requirements.in` or `requirements-dev.in` (high-level deps)
 2. Run `pip-compile --resolver=backtracking --strip-extras --upgrade <file>.in`
 3. Use `pip-sync requirements.txt requirements-dev.txt` to sync environment
@@ -176,4 +176,5 @@ Edit `_DEFAULT_EXCLUDED_DIR_NAMES` in `walker.py` (frozenset for immutability)
 ## References
 - [PRD](../docs/PRD.md) - Vision, phases, future extensions
 - [Phase 1 Plan](../docs/implementation_plan_phase_1.md) - Implementation details
+- [Phase 2 Plan](../docs/implementation_plan_phase_2.md) - Semantic search design
 - [Python Instructions](instructions/python.instructions.md) - Code style guide
