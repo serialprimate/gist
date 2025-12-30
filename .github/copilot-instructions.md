@@ -3,32 +3,54 @@
 ## Project Overview
 **gist** is a CLI tool for polyglot semantic code search using Tree-sitter and vector embeddings. It runs entirely offline for privacy.
 
-**Current Status:** Phase 1 ("No-Churn" Skeleton) - implements codebase traversal and structural code extraction. Phase 2 (vector embeddings/semantic search) is planned but not yet implemented.
+**Current Status:** Phase 2 Complete - full semantic indexing and search with ChromaDB vector store. Phase 3 (UX enhancements) planned but not implemented.
 
-**Tech Stack:** Python 3.12+, click (CLI), tree-sitter-languages (parsing), pathspec (gitignore), future: sentence-transformers, chromadb
+**Tech Stack:** Python 3.12+, click (CLI), tree-sitter-languages (parsing), pathspec (gitignore), sentence-transformers (embeddings), chromadb (vector store)
 
 **Key Files:**
-- `src/gist/main.py` - CLI definition using click (entry point via console script)
+- `src/gist/main.py` - CLI definition with `index` and `search` commands (entry point: `gist` console script)
 - `src/gist/__main__.py` - Alternative entry via `python -m gist`
 - `src/gist/extractor.py` - Tree-sitter parsing logic for `.py`, `.ts`, `.js`, `.cpp`
 - `src/gist/walker.py` - Directory traversal with gitignore/exclusion logic
+- `src/gist/indexer.py` - Indexing pipeline: walk → extract → hash/id → embed → store
+- `src/gist/embeddings.py` - Embedding abstraction (Protocol + SentenceTransformer wrapper)
+- `src/gist/store.py` - ChromaDB persistence under `.gist/chroma/`
 - `docs/PRD.md` - Product requirements and vision
-- `docs/implementation_plan_phase_1.md` - Detailed Phase 1 spec
+- `docs/implementation_plan_phase_1.md` / `phase_2.md` - Detailed phase specs
 
 ## Architecture & Data Flow
 
-### Three-Layer Pipeline (Phase 1)
-1. **Walker** (`walker.py`): Traverses directories, respects `.gitignore` and hardcoded exclusions (`.git`, `node_modules`, `__pycache__`, etc.), yields supported file paths
+### Three-Layer Pipeline (Now Complete)
+1. **Walker** (`walker.py`): Traverses directories, respects `.gitignore` and hardcoded exclusions (`.git`, `node_modules`, `__pycache__`, `.gist`, etc.), yields supported file paths
 2. **Extractor** (`extractor.py`): Parses files with Tree-sitter, identifies function/class nodes, returns `ExtractedCodeBlock` dataclasses with metadata (filename, line range, code, parent_class)
-3. **CLI** (`main.py`): `gist index` command walks root, extracts blocks, prints to console for validation
+3. **Indexer** (`indexer.py`): Coordinates walk → extract → hash/embed → store pipeline
+4. **Embeddings** (`embeddings.py`): Protocol-based abstraction around `sentence-transformers` (default: all-MiniLM-L6-v2, 384-dim)
+5. **Store** (`store.py`): ChromaDB persistence layer storing vectors + metadata in `.gist/chroma/`
+6. **CLI** (`main.py`):
+   - `gist index [ROOT]` - walks root, extracts blocks, embeds, stores in `.gist/chroma/` (full re-index on each run)
+   - `gist search "<query>" [ROOT]` - embeds query, vector search, returns top-3 results with filename:lines
 
 **Critical Design Decisions:**
 - Non-overlapping extraction: class blocks include their methods (see tests)
 - Parent class resolution: methods track their enclosing class in metadata
 - Error tolerance: parsing errors are caught, logged to stderr, and processing continues
+- PoC indexing: always wipes `.gist/chroma/` and rebuilds (incremental planned for Phase 3)
+- Block identification: stable SHA-256 hash of `filename:start:end:content_hash` for deduplication
+- Testability: `Embedder` is a Protocol allowing stub implementations without model downloads
 
-### Phase 2 (Planned, Not Implemented)
-Will add: vector embeddings (all-MiniLM-L6-v2), ChromaDB persistence in `.gist/` directory, `gist search` command
+**Data Flow Example:**
+```python
+# Indexing: file.py → ExtractedCodeBlock → StoredBlock → embedding → ChromaDB
+ExtractedCodeBlock(filename="file.py", start_line=5, end_line=10, code="def foo()...", parent_class=None)
+  ↓ (compute hash + id)
+StoredBlock(block_id="abc123...", ..., content_hash="def456...")
+  ↓ (embed_texts via SentenceTransformer)
+[0.12, -0.34, ..., 0.56]  # 384-dim vector
+  ↓ (upsert to ChromaDB)
+Persisted in .gist/chroma/
+
+# Searching: "authentication logic" → embedding → ChromaDB query → SearchHit list
+```
 
 ## Developer Workflows
 
@@ -59,11 +81,21 @@ pip install -e .           # Editable install for development
 
 ### Running & Testing
 ```bash
-gist index [ROOT_DIR]       # Run CLI (defaults to current dir)
+gist index [ROOT_DIR]       # Run CLI (defaults to current dir, wipes .gist/chroma/)
+gist search "query" [ROOT]  # Search indexed codebase (top-3 results)
 python -m gist index .      # Alternative invocation
 pytest                      # Run tests (uses pytest fixtures, parametrize)
+pytest -v tests/test_phase2.py  # Phase 2 integration tests
+./scripts/pythonlint.sh     # Run pylint on all source
 ./scripts/pythonclean.sh    # Clean artifacts, remove .venv
 ```
+
+**Testing Patterns:**
+- Stub embedders: use Protocol to avoid model downloads in tests (see `test_phase2.py:_StubEmbedder`)
+- Fake stores: cast to `VectorStore` to intercept `upsert_blocks` calls
+- `tmp_path` fixture for ephemeral file creation
+- Parametrize multi-language tests with `@pytest.mark.parametrize`
+- Set operations for validation: `assert {"class", "def"}.issubset(types)`
 
 ### Building Distribution
 ```bash
