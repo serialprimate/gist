@@ -33,6 +33,7 @@ This is still a PoC with some intentional trade-offs:
 - **Limited language set:** Only `.py`, `.js`, `.ts`, and `.cpp` are indexed.
 - **Model download on first run:** The default embedder (`all-MiniLM-L6-v2`) downloads once and then uses a local cache.
 - **Search UX is minimal:** Results are currently top-3 only and printed as plain text.
+- **Bloat:** This PoC pulls in several libraries with lots of transitive dependencies.
 
 ## Installation
 
